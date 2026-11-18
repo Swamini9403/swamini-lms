@@ -2,6 +2,8 @@
 
 **Case Study 8** · Student: **Swamini** · PRN: **202402040005** · GitHub: [@swamini9403](https://github.com/swamini9403)
 
+**Live URL:** http://ec2-15-206-89-91.ap-south-1.compute.amazonaws.com (AWS EC2, ap-south-1, Amazon Linux 2023)
+
 A containerised learning management system with an **Angular** frontend, a **Django REST** backend, **Redis** caching
 and a **MySQL** database, run with **Docker Compose** and shipped by a **GitHub Actions** CI/CD pipeline to **AWS EC2**.
 
