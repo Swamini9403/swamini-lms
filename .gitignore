@@ -1,0 +1,10 @@
+.env
+*.pem
+__pycache__/
+*.pyc
+db.sqlite3
+staticfiles/
+node_modules/
+dist/
+.angular/
+.DS_Store
