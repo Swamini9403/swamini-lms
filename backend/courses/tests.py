@@ -43,8 +43,12 @@ class CourseApiTests(TestCase):
             self.assertTrue(lesson["summary"])
 
     def test_modules_are_ordered_and_curated_by_team(self):
+        # Give the first-created course the highest module number: it must now be listed last
+        Course.objects.filter(pk=Course.objects.order_by("id").first().pk).update(module_no=99)
+        cache.clear()
         data = self.client.get("/api/courses/").json()["data"]
         self.assertEqual([c["module_no"] for c in data], sorted(c["module_no"] for c in data))
+        self.assertEqual(data[-1]["module_no"], 99)
         self.assertEqual({c["instructor"] for c in data}, {"Swamini Mote", "Neha Shinde", "Vaishnavi Phad"})
         self.assertTrue(all(c["cover_video_id"] for c in data))
 

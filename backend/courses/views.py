@@ -48,7 +48,7 @@ def annotated_courses():
     return Course.objects.annotate(
         lesson_count=Count("lessons", distinct=True),
         enrollment_count=Count("enrollments", distinct=True),
-    ).prefetch_related("lessons")
+    ).prefetch_related("lessons").order_by("module_no", "id")  # Meta.ordering is skipped for GROUP BY
 
 
 @api_view(["GET"])
