@@ -5,8 +5,8 @@
 | Team member | Details |
 |-------------|---------|
 | **Swamini Mote** | PRN 202402040005 · GitHub [@swamini9403](https://github.com/swamini9403) |
-| **Neha Shinde** | Team member |
-| **Vaishnavi Phad** | Team member |
+| **Neha Shinde** | PRN 202402040011 |
+| **Vaishnavi Phad** | PRN 202402040006 |
 
 **Live URL:** http://ec2-15-206-89-91.ap-south-1.compute.amazonaws.com (AWS EC2, ap-south-1, Amazon Linux 2023)
 

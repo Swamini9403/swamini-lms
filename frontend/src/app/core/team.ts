@@ -8,8 +8,8 @@ export interface TeamMember {
 /** Project team, in the order shown everywhere in the app and report. */
 export const TEAM: TeamMember[] = [
   { name: 'Swamini Mote', initials: 'SM', prn: '202402040005', github: 'swamini9403' },
-  { name: 'Neha Shinde', initials: 'NS' },
-  { name: 'Vaishnavi Phad', initials: 'VP' },
+  { name: 'Neha Shinde', initials: 'NS', prn: '202402040011' },
+  { name: 'Vaishnavi Phad', initials: 'VP', prn: '202402040006' },
 ];
 
 export const APP_NAME = 'LearnSphere';

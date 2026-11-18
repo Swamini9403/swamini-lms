@@ -13,15 +13,15 @@ import { REPO_URL, TEAM } from '../core/team';
       <div class="panel">
         <h3>Project team</h3>
         <table class="table">
-          <thead><tr><th>#</th><th>Name</th><th>Details</th></tr></thead>
+          <thead><tr><th>#</th><th>Name</th><th>PRN / GitHub</th></tr></thead>
           <tbody>
             @for (m of team; track m.name; let i = $index) {
               <tr>
                 <td>{{ i + 1 }}</td>
                 <td><b>{{ m.name }}</b></td>
                 <td class="small">
-                  @if (m.prn) { PRN {{ m.prn }} · }
-                  @if (m.github) { GitHub {{ m.github }} } @else { Team member }
+                  PRN {{ m.prn }}
+                  @if (m.github) { · GitHub {{ m.github }} }
                 </td>
               </tr>
             }
