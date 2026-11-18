@@ -1,10 +1,17 @@
-# Swamini LMS — Online Learning Platform (CI/CD + Docker)
+# LearnSphere — Online Learning Platform (CI/CD + Docker)
 
-**Case Study 8** · Student: **Swamini** · PRN: **202402040005** · GitHub: [@swamini9403](https://github.com/swamini9403)
+**Case Study 8: Online Learning Platform – CI/CD + Docker**
+
+| Team member | Details |
+|-------------|---------|
+| **Swamini Mote** | PRN 202402040005 · GitHub [@swamini9403](https://github.com/swamini9403) |
+| **Neha Shinde** | Team member |
+| **Vaishnavi Phad** | Team member |
 
 **Live URL:** http://ec2-15-206-89-91.ap-south-1.compute.amazonaws.com (AWS EC2, ap-south-1, Amazon Linux 2023)
 
-A containerised learning management system with an **Angular** frontend, a **Django REST** backend, **Redis** caching
+LearnSphere is a containerised learning management system with 9 video-based modules (38 lessons with notes and
+embedded YouTube videos), built with an **Angular** frontend, a **Django REST** backend, **Redis** caching
 and a **MySQL** database, run with **Docker Compose** and shipped by a **GitHub Actions** CI/CD pipeline to **AWS EC2**.
 
 ```
@@ -21,6 +28,24 @@ Browser ──▶ frontend (Angular + Nginx :80) ──/api──▶ backend (Dj
 | 2 | Multi-container Compose setup with Redis and MySQL | [`docker-compose.yml`](docker-compose.yml) |
 | 3 | Persistent volumes for MySQL | `mysql_data` → named volume `swamini_mysql_data` in [`docker-compose.yml`](docker-compose.yml) |
 | 4 | Docker in GitHub Actions CI/CD | [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml) |
+
+## Learning modules
+
+| # | Module | Curated by | Lessons |
+|---|--------|-----------|---------|
+| 1 | Docker Fundamentals | Swamini Mote | 4 |
+| 2 | Docker Compose for Multi-Container Apps | Swamini Mote | 4 |
+| 3 | Docker Volumes, Networking and Persistence | Vaishnavi Phad | 4 |
+| 4 | CI/CD with GitHub Actions | Swamini Mote | 4 |
+| 5 | Angular Frontend Development | Neha Shinde | 4 |
+| 6 | Django REST Framework APIs | Vaishnavi Phad | 5 |
+| 7 | MySQL and Database Design | Vaishnavi Phad | 4 |
+| 8 | Redis Caching and Web Performance | Neha Shinde | 4 |
+| 9 | AWS EC2 and Linux for Deployment | Neha Shinde | 5 |
+
+Lesson content (notes + YouTube video IDs) lives in
+[`backend/courses/management/commands/seed_courses.py`](backend/courses/management/commands/seed_courses.py) and is
+upserted on every container start, so existing enrollments are never lost.
 
 ## Run locally
 

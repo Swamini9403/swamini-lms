@@ -6,19 +6,25 @@ from .models import Course, Enrollment, Lesson
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
-        fields = ["id", "title", "order", "duration_minutes"]
+        fields = ["id", "title", "order", "summary", "video_id", "video_title", "channel"]
 
 
 class CourseListSerializer(serializers.ModelSerializer):
     lesson_count = serializers.IntegerField(read_only=True)
     enrollment_count = serializers.IntegerField(read_only=True)
+    cover_video_id = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
         fields = [
-            "id", "title", "slug", "category", "instructor", "level",
-            "duration_hours", "rating", "description", "lesson_count", "enrollment_count",
+            "id", "module_no", "title", "slug", "category", "instructor", "level",
+            "duration_hours", "rating", "description", "lesson_count", "enrollment_count", "cover_video_id",
         ]
+
+    def get_cover_video_id(self, course):
+        """The first lesson's video doubles as the course thumbnail."""
+        first = next((lesson for lesson in course.lessons.all() if lesson.video_id), None)
+        return first.video_id if first else ""
 
 
 class CourseDetailSerializer(CourseListSerializer):

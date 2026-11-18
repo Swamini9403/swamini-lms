@@ -15,7 +15,7 @@ RUN pip wheel --wheel-dir /wheels -r requirements.txt
 FROM python:3.12-slim
 
 LABEL org.opencontainers.image.title="swamini-lms-backend" \
-      org.opencontainers.image.description="Django REST API for the Swamini LMS" \
+      org.opencontainers.image.description="Django REST API for LearnSphere (Swamini Mote, Neha Shinde, Vaishnavi Phad)" \
       org.opencontainers.image.source="https://github.com/swamini9403/swamini-lms"
 
 ENV PYTHONDONTWRITEBYTECODE=1 \

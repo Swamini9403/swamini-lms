@@ -8,6 +8,7 @@ class Course(models.Model):
         ("Advanced", "Advanced"),
     ]
 
+    module_no = models.PositiveIntegerField(default=0)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     category = models.CharField(max_length=80)
@@ -19,7 +20,7 @@ class Course(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["id"]
+        ordering = ["module_no", "id"]
 
     def __str__(self):
         return self.title
@@ -30,6 +31,10 @@ class Lesson(models.Model):
     title = models.CharField(max_length=200)
     order = models.PositiveIntegerField(default=1)
     duration_minutes = models.PositiveIntegerField(default=10)
+    summary = models.TextField(blank=True)
+    video_id = models.CharField(max_length=20, blank=True, help_text="YouTube video ID")
+    video_title = models.CharField(max_length=200, blank=True)
+    channel = models.CharField(max_length=120, blank=True)
 
     class Meta:
         ordering = ["course", "order"]

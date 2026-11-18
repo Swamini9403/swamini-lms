@@ -1,20 +1,24 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiService, Course, Enrollment, Stats } from '../core/api.service';
+import { TEAM } from '../core/team';
+import { thumbnailUrl } from '../core/youtube';
 
 @Component({
   selector: 'app-dashboard',
   imports: [RouterLink],
   template: `
     <section class="hero">
-      <p class="eyebrow">Online Learning Platform · Case Study 8</p>
+      <p class="eyebrow">LearnSphere · Online Learning Platform · Case Study 8</p>
       <h1>Learn. Build. Ship.</h1>
       <p class="lead">
-        A containerised learning platform: an Angular frontend, a Django REST API, Redis caching and a MySQL database,
-        built and deployed by a GitHub Actions CI/CD pipeline.
+        Video-based modules on Docker, CI/CD, Angular, Django, MySQL, Redis and AWS — served by a containerised
+        Angular + Django REST + Redis + MySQL platform that GitHub Actions builds and deploys to AWS EC2.
       </p>
+      <p class="small">Built by <b>{{ teamNames }}</b></p>
       <div class="actions">
-        <a routerLink="/courses" class="btn">Browse courses</a>
+        <a routerLink="/courses" class="btn">Start learning</a>
+        <a routerLink="/team" class="btn btn-ghost">Meet the team</a>
         <a routerLink="/status" class="btn btn-ghost">View system status</a>
       </div>
     </section>
@@ -33,17 +37,24 @@ import { ApiService, Course, Enrollment, Stats } from '../core/api.service';
 
     <section class="section">
       <div class="section-head">
-        <h2>Featured courses</h2>
+        <h2>Featured modules</h2>
         <a routerLink="/courses" class="link">See all →</a>
       </div>
       <div class="grid">
         @for (c of featured(); track c.id) {
-          <a class="card" [routerLink]="['/courses', c.id]">
-            <span class="tag">{{ c.category }}</span>
-            <h3>{{ c.title }}</h3>
-            <p class="muted">{{ c.description }}</p>
-            <div class="meta">
-              <span>{{ c.level }}</span><span>{{ c.duration_hours }} h</span><span>★ {{ c.rating }}</span>
+          <a class="card card-media" [routerLink]="['/courses', c.id]">
+            <div class="thumb">
+              <img [src]="thumb(c.cover_video_id)" [alt]="c.title" loading="lazy" />
+              <span class="play">▶</span>
+              <span class="module-no">Module {{ c.module_no }}</span>
+            </div>
+            <div class="card-body">
+              <span class="tag">{{ c.category }}</span>
+              <h3>{{ c.title }}</h3>
+              <p class="small">Curated by <b>{{ c.instructor }}</b></p>
+              <div class="meta">
+                <span>{{ c.level }}</span><span>{{ c.lesson_count }} videos</span><span>★ {{ c.rating }}</span>
+              </div>
             </div>
           </a>
         }
@@ -54,7 +65,7 @@ import { ApiService, Course, Enrollment, Stats } from '../core/api.service';
       <h2>Recent enrollments</h2>
       @if (enrollments().length) {
         <table class="table">
-          <thead><tr><th>Student</th><th>Course</th><th>Enrolled</th></tr></thead>
+          <thead><tr><th>Student</th><th>Module</th><th>Enrolled</th></tr></thead>
           <tbody>
             @for (e of enrollments(); track e.id) {
               <tr><td>{{ e.student_name }}</td><td>{{ e.course_title }}</td><td>{{ e.enrolled_at.slice(0, 16).replace('T', ' ') }}</td></tr>
@@ -62,7 +73,7 @@ import { ApiService, Course, Enrollment, Stats } from '../core/api.service';
           </tbody>
         </table>
       } @else {
-        <p class="muted">No enrollments yet. Open a course and enrol to see it here.</p>
+        <p class="muted">No enrollments yet. Open a module and enrol to see it here.</p>
       }
     </section>
 
@@ -83,10 +94,12 @@ export class Dashboard {
   cacheState = signal('');
   featured = signal<Course[]>([]);
   enrollments = signal<Enrollment[]>([]);
+  teamNames = TEAM.map((m) => m.name).join(', ');
+  thumb = thumbnailUrl;
 
   tiles: { key: keyof Stats; label: string }[] = [
-    { key: 'courses', label: 'Courses' },
-    { key: 'lessons', label: 'Lessons' },
+    { key: 'courses', label: 'Modules' },
+    { key: 'lessons', label: 'Video lessons' },
     { key: 'enrollments', label: 'Enrollments' },
     { key: 'categories', label: 'Categories' },
   ];

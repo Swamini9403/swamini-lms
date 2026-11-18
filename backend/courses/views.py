@@ -48,7 +48,7 @@ def annotated_courses():
     return Course.objects.annotate(
         lesson_count=Count("lessons", distinct=True),
         enrollment_count=Count("enrollments", distinct=True),
-    )
+    ).prefetch_related("lessons")
 
 
 @api_view(["GET"])
@@ -73,7 +73,7 @@ def course_detail(request, pk):
     key = f"courses:v{catalog_version()}:detail:{pk}"
 
     def build():
-        course = get_object_or_404(annotated_courses().prefetch_related("lessons"), pk=pk)
+        course = get_object_or_404(annotated_courses(), pk=pk)
         return CourseDetailSerializer(course).data
 
     return cached_response(key, build)

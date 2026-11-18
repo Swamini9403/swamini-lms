@@ -11,11 +11,16 @@ export interface Lesson {
   id: number;
   title: string;
   order: number;
-  duration_minutes: number;
+  summary: string;
+  video_id: string;
+  video_title: string;
+  channel: string;
 }
 
 export interface Course {
   id: number;
+  module_no: number;
+  cover_video_id: string;
   title: string;
   slug: string;
   category: string;

@@ -32,11 +32,26 @@ class CourseApiTests(TestCase):
         res = self.client.get("/api/courses/", {"search": "redis"})
         self.assertEqual(len(res.json()["data"]), 1)
 
-    def test_course_detail_includes_lessons(self):
+    def test_course_detail_includes_lessons_with_videos(self):
         course = Course.objects.first()
         res = self.client.get(f"/api/courses/{course.id}/")
         self.assertEqual(res.status_code, 200)
-        self.assertGreater(len(res.json()["data"]["lessons"]), 0)
+        lessons = res.json()["data"]["lessons"]
+        self.assertGreater(len(lessons), 0)
+        for lesson in lessons:
+            self.assertRegex(lesson["video_id"], r"^[A-Za-z0-9_-]{11}$")
+            self.assertTrue(lesson["summary"])
+
+    def test_modules_are_ordered_and_curated_by_team(self):
+        data = self.client.get("/api/courses/").json()["data"]
+        self.assertEqual([c["module_no"] for c in data], sorted(c["module_no"] for c in data))
+        self.assertEqual({c["instructor"] for c in data}, {"Swamini Mote", "Neha Shinde", "Vaishnavi Phad"})
+        self.assertTrue(all(c["cover_video_id"] for c in data))
+
+    def test_seed_is_idempotent(self):
+        lessons = Course.objects.first().lessons.count()
+        call_command("seed_courses", verbosity=0)
+        self.assertEqual(Course.objects.first().lessons.count(), lessons)
 
     def test_enrollment_invalidates_cache_and_rejects_duplicates(self):
         course = Course.objects.first()

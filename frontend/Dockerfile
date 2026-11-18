@@ -14,7 +14,7 @@ RUN npm run build -- --configuration production
 FROM nginx:1.29-alpine
 
 LABEL org.opencontainers.image.title="swamini-lms-frontend" \
-      org.opencontainers.image.description="Angular frontend for the Swamini LMS served by Nginx" \
+      org.opencontainers.image.description="Angular frontend for LearnSphere served by Nginx" \
       org.opencontainers.image.source="https://github.com/swamini9403/swamini-lms"
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
